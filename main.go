@@ -5,17 +5,19 @@ import (
 	"strings"
 	"unicode"
 	"strconv"
+	"math"
 )
 //定义运算符优先级
 var level = map[rune]int{
-	'+':2,
-	'-':2,
-	'*':3,
-	'/':3,
+	'+':1,
+	'-':1,
+	'*':2,
+	'/':2,
+	'^':3,
 }
 //判断是否为可用运算符
 func ifOperator (op rune) bool{
-	if level[op]>1{
+	if level[op]>0{
 		return true
 	}else{
 		return false
@@ -51,6 +53,9 @@ func infixToPostfix(str string) []string {
 					stack = stack[:len(stack)-1]
 				}
 				stack = append(stack, ch)
+			}else{
+				fmt.Println("输入的计算式不合法，请重新输入")
+				goto Label
 			}
 		}
 	}
@@ -79,6 +84,8 @@ func whichOp (op string,a float64,b float64) float64 {
 		return b+a
 	case "-":
 		return b-a
+	case "^":
+		return math.Pow(b,a)
 	//一会加个default:
 	}
 	return 0
@@ -102,7 +109,7 @@ func calculate(str []string) float64 {
 }
 func main() {
 	var input string
-	fmt.Println("请输入计算式：")
+	Label :fmt.Println("请输入计算式：")
 	fmt.Scanln(&input)
 	Postfix := infixToPostfix(input)
 	anwser := calculate(Postfix)
