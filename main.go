@@ -53,9 +53,6 @@ func infixToPostfix(str string) []string {
 					stack = stack[:len(stack)-1]
 				}
 				stack = append(stack, ch)
-			}else{
-				fmt.Println("输入的计算式不合法，请重新输入")
-				goto Label
 			}
 		}
 	}
@@ -109,7 +106,7 @@ func calculate(str []string) float64 {
 }
 func main() {
 	var input string
-	Label :fmt.Println("请输入计算式：")
+	fmt.Println("请输入计算式：")
 	fmt.Scanln(&input)
 	Postfix := infixToPostfix(input)
 	anwser := calculate(Postfix)
